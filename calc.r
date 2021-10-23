@@ -4,11 +4,11 @@
 # Variables: body weight = w, pack weight = L, terrain factor = t,
 # Grade(percent) = g, walking speed = s
 
-w = 120
-L = 45
-t = 1
-g = 15
-s = 2.4  
+w <- as.numeric(readline(prompt = "Enter Body Weight: "))
+L <- as.numeric(readline(prompt = "Enter Pack Weight: "))
+t <- as.numeric(readline(prompt = "Enter Terrain Factor: "))
+g <- as.numeric(readline(prompt = "Enter Grade (Percent): "))
+s <- as.numeric(readline(prompt = "Enter Walking Speed: "))  
 
 U <- w/2.2*60/4184 * 20.1*(3.05 + (w/2.2 + L/2.2) / w*2.2 * t * (0.32 * g + 3.28 +
            (1 + 0.19 * g) * 2.66 * (s*1609/3600)*(s*1609/3600)))
