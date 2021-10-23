@@ -49,13 +49,17 @@ server <- function(input, output) {
 #        calsBurned <- w/2.2*60/4184 * 20.1*(3.05 + 0.73 * (w/2.2 + L/2.2) / w*2.2 * t * 
 #                                                (3.28 + 2.66 * (s*1609/3600)*(s*1609/3600)))
 #    }
-    
-    output$calories <- renderText({
-        calsBurned <- round(w()/2.2*60/4184 * 20.1*(3.05 + (w()/2.2 + L()/2.2) / w()*2.2 * 
-            t() * (0.32 * g() + 3.28 + (1 + 0.19 * g()) * 2.66 * (s()*1609/3600)*(s()*1609/3600))), digits = 2)
 
+    calsBurned <- reactive(ifelse(g() >=0, round(w()/2.2*60/4184 * 20.1*(3.05 + (w()/2.2 + L()/2.2) / w()*2.2 * 
+                    t() * (0.32 * g() + 3.28 + (1 + 0.19 * g()) * 2.66 * (s()*1609/3600)*(s()*1609/3600))), digits = 2),
+                    round(w()/2.2*60/4184 * 20.1*(3.05 + 0.73 * (w()/2.2 + L/2.2) / w()*2.2 * t() * 
+                                                      (3.28 + 2.66 * (s()*1609/3600)*(s()*1609/3600))), digits = 2)))
+        
+    output$calories <- renderText({
+
+#        paste("hello", s()*t())
         paste("While hiking at ", s(), "mph with a ", L(), "lb. pack on a(n) ", g(), 
-              "% grade, you would burn ", calsBurned, " calories per hour.")
+              "% grade, you would burn ", calsBurned(), " calories per hour.")
 
     })
 }
