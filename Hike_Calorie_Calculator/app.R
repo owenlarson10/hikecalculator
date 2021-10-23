@@ -19,10 +19,10 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             h3("Enter values here"),
-            numericInput("weight", label = "Body Weight", value = NA),
-            numericInput("pack", label = "Pack Weight", value = NA),
-            numericInput("terrain", label = "Terrain Factor", value = 1),
-            numericInput("grade", label = "Grade (%)", value = 0, max = 90, min = -90),
+            numericInput("weight", label = "Body Weight", value = 150),
+            numericInput("pack", label = "Pack Weight", value = 30),
+            numericInput("terrain", label = "Terrain Factor", value = 1.2),
+            numericInput("grade", label = "Grade (%)", value = 8, max = 90, min = -90),
             numericInput("speed", label = "Walking Speed (mph)", value = 3),
         ),
 
@@ -40,7 +40,9 @@ server <- function(input, output) {
     t <- reactive(input$terrain)
     g <- reactive(input$grade)
     s <- reactive(input$speed)
-    
+
+    calsBurned = reactive(w * L * s)
+        
 #    if (g >= 0) {
 #        calsBurned <- w/2.2*60/4184 * 20.1*(3.05 + (w/2.2 + L/2.2) / w*2.2 * t * (0.32 * g + 3.28 +
 #                                                                                      (1 + 0.19 * g) * 2.66 * (s*1609/3600)*(s*1609/3600)))
@@ -51,8 +53,14 @@ server <- function(input, output) {
 #    }
     
     output$calories <- renderText({
-        paste("Your walking speed is ", s(), " mph.")
-#        paste("You burned ", calsBurned, " calories.")
+        calsBurned <- round(w()/2.2*60/4184 * 20.1*(3.05 + (w()/2.2 + L()/2.2) / w()*2.2 * 
+            t() * (0.32 * g() + 3.28 + (1 + 0.19 * g()) * 2.66 * (s()*1609/3600)*(s()*1609/3600))), digits = 2)
+ 
+#        cal = (s()*t()) * w()/2.2*60/4184
+        paste("While hiking at ", s(), "mph with a ", L(), "lb. pack on a ", g(), "% grade, you would burn ", calsBurned, " calories per hour.")
+#        paste("Your walking speed is ", calsBurned(), " mph.")
+#        calsBurned = (t * s)
+#        paste("You burned ", s(), " calories.")
 
     })
 }
