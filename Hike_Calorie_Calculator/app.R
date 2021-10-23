@@ -13,7 +13,7 @@ library(shiny)
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Hiking Calorie Calculator"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -35,8 +35,24 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
+    w <- reactive(input$weight)
+    L <- reactive(input$pack)
+    t <- reactive(input$terrain)
+    g <- reactive(input$grade)
+    s <- reactive(input$speed)
+    
+#    if (g >= 0) {
+#        calsBurned <- w/2.2*60/4184 * 20.1*(3.05 + (w/2.2 + L/2.2) / w*2.2 * t * (0.32 * g + 3.28 +
+#                                                                                      (1 + 0.19 * g) * 2.66 * (s*1609/3600)*(s*1609/3600)))
+#    } else {
+#        
+#        calsBurned <- w/2.2*60/4184 * 20.1*(3.05 + 0.73 * (w/2.2 + L/2.2) / w*2.2 * t * 
+#                                                (3.28 + 2.66 * (s*1609/3600)*(s*1609/3600)))
+#    }
+    
     output$calories <- renderText({
-        paste("Your walking speed is ", input$speed)
+        paste("Your walking speed is ", s(), " mph.")
+#        paste("You burned ", calsBurned, " calories.")
 
     })
 }
