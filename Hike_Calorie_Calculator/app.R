@@ -53,12 +53,9 @@ server <- function(input, output) {
     output$calories <- renderText({
         calsBurned <- round(w()/2.2*60/4184 * 20.1*(3.05 + (w()/2.2 + L()/2.2) / w()*2.2 * 
             t() * (0.32 * g() + 3.28 + (1 + 0.19 * g()) * 2.66 * (s()*1609/3600)*(s()*1609/3600))), digits = 2)
- 
-#        cal = (s()*t()) * w()/2.2*60/4184
-        paste("While hiking at ", s(), "mph with a ", L(), "lb. pack on a ", g(), "% grade, you would burn ", calsBurned, " calories per hour.")
-#        paste("Your walking speed is ", calsBurned(), " mph.")
-#        calsBurned = (t * s)
-#        paste("You burned ", s(), " calories.")
+
+        paste("While hiking at ", s(), "mph with a ", L(), "lb. pack on a(n) ", g(), 
+              "% grade, you would burn ", calsBurned, " calories per hour.")
 
     })
 }
