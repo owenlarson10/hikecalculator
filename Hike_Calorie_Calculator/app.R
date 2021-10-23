@@ -40,8 +40,6 @@ server <- function(input, output) {
     t <- reactive(input$terrain)
     g <- reactive(input$grade)
     s <- reactive(input$speed)
-
-    calsBurned = reactive(w * L * s)
         
 #    if (g >= 0) {
 #        calsBurned <- w/2.2*60/4184 * 20.1*(3.05 + (w/2.2 + L/2.2) / w*2.2 * t * (0.32 * g + 3.28 +
